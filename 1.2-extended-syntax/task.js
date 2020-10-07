@@ -28,41 +28,30 @@ function getAverageMark(marks){
   let averageMark = 0;
   let sumMark = 0;
   arrMarks = marks;
-  
-    for (let i = 0; i < arrMarks.length; i ++) {
-      sumMark = sumMark + arrMarks[i];
     
-      if (arrMarks.length === 0) {
-        averageMark = 0;
-      }
-      
-      if (arrMarks.length > 5) {
-        arrMarks.splice(5);
-        console.log("Извините, но количество введенных оценок должно быть меньше 5");
-        averageMark = sumMark / arrMarks.length;  
-      } 
-
-      if (arrMarks.length <= 5) {
-        averageMark = sumMark / arrMarks.length;
-      }
+    if (arrMarks.length === 0) {
+      averageMark = 0;
     }
-        return averageMark;
-  
+    if (arrMarks.length > 5) {
+      arrMarks.splice(5);
+      console.log("Извините, но количество введенных оценок должно быть меньше 5");
+      averageMark = sumMark / arrMarks.length;  
+    } 
+      for (let i = 0; i < arrMarks.length; i ++) {
+        sumMark = sumMark + arrMarks[i];
+          if (arrMarks.length <= 5) {
+            averageMark = sumMark / arrMarks.length;
+          }
+      }
+          return averageMark;
 }
 
 function askDrink(name,dateOfBirthday){
-    
-  let today = new Date();
-  let year = today.getFullYear();
-  //let yearOfBirthday = dateOfBirthday.getFullYear();
-  //let age = year - yearOfBirthday;
-  let yearOfBirthday = dateOfBirthday;
-  let age = year - yearOfBirthday.getFullYear();
-  let result;
-  if (age >= 18) {
-    result = `Не желаете ли олд-фэшн, ${name}?`;
+
+  if (new Date().getFullYear() - dateOfBirthday.getFullYear() >= 18) {
+    return `Не желаете ли олд-фэшн, ${name}?`;
   } else {
-    result = `Сожалею, ${name}, но я не могу вам продать алкоголь. Зато могу предложить вам замечательный клюквенный компот!`;
+    return`Сожалею, ${name}, но я не могу вам продать алкоголь. Зато могу предложить вам замечательный клюквенный компот!`;
   }
-  return result;
+  
 }
