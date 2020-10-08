@@ -30,20 +30,18 @@ function getAverageMark(marks){
   arrMarks = marks;
     
     if (arrMarks.length === 0) {
-      averageMark = 0;
+      return averageMark;
     }
     if (arrMarks.length > 5) {
       arrMarks.splice(5);
       console.log("Извините, но количество введенных оценок должно быть меньше 5");
-      averageMark = sumMark / arrMarks.length;  
     } 
+    
       for (let i = 0; i < arrMarks.length; i ++) {
         sumMark = sumMark + arrMarks[i];
-          if (arrMarks.length <= 5) {
-            averageMark = sumMark / arrMarks.length;
-          }
       }
-          return averageMark;
+        averageMark = sumMark / arrMarks.length;
+        return averageMark;
 }
 
 function askDrink(name,dateOfBirthday){
