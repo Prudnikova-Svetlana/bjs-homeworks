@@ -2,17 +2,23 @@
 
 function calculateTotalMortgage(percent, contribution, amount, date) {
     
-    if (isFinite(percent) === false) { 
-      console.log(`Параметр Процентная ставка содержит неправильное значение ${percent}`);
-    }
+    if (Number.isNaN(percent) === false) { 
+      percent = parseInt(percent, 10);
+    } else {
+        console.log(`Параметр Процентная ставка содержит неправильное значение ${percent}`);   
+      }
     
-    if (isFinite(contribution) === false) { 
-        console.log(`Параметр Начальный взнос содержит неправильное значение ${contribution}`);
-    }
+    if (Number.isNaN(contribution) === false) { 
+      contribution = parseInt(contribution, 10);
+    }  else {
+         console.log(`Параметр Начальный взнос содержит неправильное значение ${contribution}`);  
+       }
 
-    if (isFinite(amount) === false) { 
-        console.log(`Параметр Общая стоимость содержит неправильное значение ${amount}`);
-    }
+    if (Number.isNaN(amount) === false) { 
+      amount = parseInt(amount, 10);
+    }  else {
+        console.log(`Параметр Общая стоимость содержит неправильное значение ${amount}`);  
+       } 
 
       let bodyCredit = amount - contribution;
       let creditTerm = (date.getFullYear() - new Date().getFullYear()) * 12 + (date.getMonth() - new Date().getMonth());
@@ -29,7 +35,8 @@ function getGreeting(name) {
     let greeting;
  
       if ((name === undefined) || (name === "") || (name === null)) {
-        greeting = "Привет, мир! Меня зовут Аноним";
+        name = "Аноним";
+        greeting = `Привет, мир! Меня зовут ${name}`;
         console.log(greeting);
       } else {
           greeting = `Привет, мир! Меня зовут ${name}`;
