@@ -70,7 +70,6 @@ showSolutionsMessage (2, 4, 2);
 // Задача 2 Журнал успеваемости
 
 let arrMarks =[];
-let averageArr = [];
 let marks;
 let data;
 let averageRating;
@@ -99,48 +98,28 @@ console.log(getAverageScore({
     //rench: []
 //}));
 
-// marks это может быть любой массив. А точнее это массив из перебираемого предмета.....
-// вам нужно у нового предмета в свойство названия предмета записывать новое значение....
-// А у вас на каждой итерации объект полностью перезаписывается
-
 function getAverageScore(data) {
-// Перебираем поля аргумента data и заполняем массив arrMarks
 
   let average = 0;
-  let summAverage = 0;
-  let summLessons = []; 
-  let averageRatingLesson;
+  let averageRatingLesson = {};
+   //average: average  
 
-  for (let prop in data) {
-  
-    marks = data[prop];
-    arrMarks.push(marks);
-
-    summLessons.push([prop]);
-      if (summLessons.length > 10) {
-        summLessons.splice(10);
-      }
-
-    
-    console.log(summLessons + "  summlessons");
-    console.log(averageArr + "  averageArr");
-    averageArr.push(getAverageMark(data[prop]));
-    summAverage = summAverage + averageRating;
-    console.log(averageRating + "  averagerating - средняя оценка по каждому предмету");
-    console.log(summAverage + "  summAverage - сумма средних оценок");
-    average = summAverage / averageArr.length;
-    console.log(average + " average - средняя оценка по всем предметам - результат функции");
-
-      // Формируем объект как результат этой функции
-      averageRatingLesson = {
-        //[prop]: getAverageMark(data[prop]), // это значение средняя оценка по кажому предмету (averagerating)
-        summLessons: averageArr,
-        average: average                   // это средняя оценка по всем предметам
-      }; 
-   
+  if (data === {}) {
+    return average;
   }
-        //console.log(averageRatingLesson + "  этот объект - результат функции");
-        return averageRatingLesson;
+  for (let prop in data) {
+// Перебираем поля аргумента data и записываем результаты в новый объект averageRatingLesson
+// Благодаря циклу получаемя массив со средними оценками по каждому предмету 
+    averageRatingLesson[prop] = getAverageMark(data[prop]);
+  }
+    // с помощью этого метода возвращаем массив значений со средними оценками,
+    // чтобы посчитать среднюю оценку по всем предметам
+    average = getAverageMark(Object.values(averageRatingLesson));
+    //Добавляем свойство average со значением average
+    averageRatingLesson.average = average;
+    
+    return averageRatingLesson;
+        
 }
     
    
@@ -152,8 +131,6 @@ function getAverageMark(marks) {
   if (arrMarks.length === 0) {
     return averageRating;
   }
-  
-
       for (let i = 0; i < arrMarks.length; i ++) {
         summMarks = summMarks + arrMarks[i];
      }
