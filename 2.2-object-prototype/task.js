@@ -22,18 +22,22 @@ String.prototype.isPalindrome = function isPalindrome() {
 */ 
 
 String.prototype.isPalindrome = function() {
-  const str = this.toLowerCase;
+  const str = this.replace(/\s/g, "").toLocaleLowerCase();
+
+  console.log(str);
   let word = str.length;
+  console.log(word);
   let middleWord = Math.floor(word/2);
     
     for ( let i = 0; i < middleWord; i++ ) {
-      if (str[i] !== str[word - 1 - i]) {
+      if (str[i] !== str[word - 1 - i]) {  
         return false;
-      }
+      } 
     }
       return true;
-}
+};
 //console.log("А роза упала на лапу Азора ");
+
 
 function getAverageMark(marks) {
     // код для задачи №2 писать здесь
