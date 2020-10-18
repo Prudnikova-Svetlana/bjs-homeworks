@@ -8,22 +8,32 @@
 Функция должна возвращать true если строка читается одинаково в любую сторону, и false если строка читается по-разному.
 Реализуйте регистронезависимость функции
 Проверьте вашу функцию: console.log("А роза упала на лапу Азора")//true
+
+у вас isPalindrome будет в прототипе строки, и соответственно появится у все строк, то есть после:
+
+String.prototype.isPalindrome = function () {
+можно будет вызывать
+
+"пример строки".isPalindrome();
+а откуда вы узнаете к какой строке применили isPalindrome? строка упадет в this
+
+String.prototype.isPalindrome = function isPalindrome() {
+    const str = this;
 */ 
 
-String.prototype.isPalindrome = function isPalindrome(str) {
-    
-  this.str = this.str.toLowerCase();
-  let word = this.str.length;
+String.prototype.isPalindrome = function() {
+  const str = this.toLowerCase;
+  let word = str.length;
   let middleWord = Math.floor(word/2);
     
     for ( let i = 0; i < middleWord; i++ ) {
-      if (this.str[i] !== this.str[word - 1 - i]) {
+      if (str[i] !== str[word - 1 - i]) {
         return false;
       }
     }
       return true;
 }
-
+//console.log("А роза упала на лапу Азора ");
 
 function getAverageMark(marks) {
     // код для задачи №2 писать здесь
@@ -37,9 +47,10 @@ let roundedAverage;
   }
     for (let i = 0; i < arrMarks.length; i ++ ) {
       averageSumm = averageSumm + arrMarks[i];
+    }
       average = averageSumm / arrMarks.length;
       roundedAverage = Math.round(average);
-    }
+   
   return roundedAverage;
 }
 
@@ -47,9 +58,6 @@ function checkBirthday(birthday) {
     // код для задачи №3 писать здесь
   let date = new Date();
   let now = + date;
-  console.log(date);
-  console.log (now);
-  //let aaa = new Date(birthday);
   let birthdayDate = + new Date(birthday);
   console.log(birthdayDate);
   let diff = now - birthdayDate; // это разница в миллисекундах
@@ -67,9 +75,6 @@ function checkBirthday(birthday) {
   // Определяем возраст пользователя в годах и затем округляем 
 */ 
   let age = diff / 31556952000; 
-  age = Math.round(age);
-
   let verdict = age >= 18 ? true : false;
-
     return verdict;
 }
