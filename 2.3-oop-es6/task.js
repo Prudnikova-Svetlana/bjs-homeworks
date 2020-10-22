@@ -72,12 +72,12 @@ class DetectiveBook extends Book {
   const picknick = new FantasticBook("Аркадий и Борис Стругацкие", "Пикник на обочине", 1972, 168);
   console.log(picknick.author); //"Аркадий и Борис Стругацкие"
   picknick.state = 10;
-  console.log(picknick.state); //10
-  console.log(picknick.type);
-  console.log(picknick.releaseDate);
-  console.log(picknick.pagesCount);
+  console.log(picknick.state); // 10
+  console.log(picknick.type); // fantastic
+  console.log(picknick.releaseDate); // 1972
+  console.log(picknick.pagesCount); // 168
   picknick.fix();
-  console.log(picknick.state); //15  
+  console.log(picknick.state); // 15  
 
   // Задача 2
 
@@ -142,6 +142,89 @@ console.log("Количество книг до выдачи: " + library.books.
 library.giveBookByName("Машина времени");
 console.log("Количество книг после выдачи: " + library.books.length); //Количество книг после выдачи: 3
 
+
+/*
+5.   Протестируйте корректность работы классов и методов, разыграв тестовый сценарий:
+1. Создайте библиотеку;
+2. Добавьте в библиотеку несколько печатных изданий различных типов;
+3. Найдите книгу, изданную в 1919 году (создайте такую книгу при необходимости);
+4. Выдайте любую книгу;
+5. Испортите выданную книгу;
+6. Почините выданную книгу;
+7. Попытайтесь добавить починенную книгу обратно в библиотеку.
+*/
+
+
+const kristi = new PrintEditionItem("Агата Кристи", "Загадка Эндхауза", 1932, 235);
+  console.log(kristi.name); // Агата Кристи
+  console.log(kristi.state); // 100
+  kristi.fix(); 
+  console.log(kristi.state); // 100
+
+  
+
+// 1. Создайте библиотеку;
+const cityLibrary = new Library("Городская Библиотека");
+
+// 2. Добавьте в библиотеку несколько печатных изданий различных типов;
+cityLibrary.addBook(new DetectiveBook("Гилберт Кийт Честертон", "Тайна отца Брауна", 1935, 150));
+cityLibrary.addBook(new DetectiveBook("Агата Кристи", "Загадка Эндхауза", 1932, 235));
+
+cityLibrary.addBook(new FantasticBook("Джон Толкин", "Властелин колец", 1964, 350));
+cityLibrary.addBook(new FantasticBook("Фрэнк Герберт", "Дюна", 1972, 168));
+
+cityLibrary.addBook(new NovelBook("Трумен Капоте", "Завтрак у Тиффани", 1958, 250));
+cityLibrary.addBook(new NovelBook("Андре Моруа", "Письма незнакомке", 1953, 170));
+
+cityLibrary.addBook(new Magazine("Вокруг света", 1978, 50));
+cityLibrary.addBook(new Magazine("Наука и жизнь", 1986, 76));
+cityLibrary.addBook(new Magazine("Моделист-конструктор", 1990, 46));
+
+console.log(cityLibrary.findBookBy("name", "Ромео и Джульетта")); //null
+
+// 3. Найдите книгу, изданную в 1978 г;
+console.log(cityLibrary.findBookBy("releaseDate", 1978)); //"Вокруг света"
+
+console.log(cityLibrary.findBookBy("author", "Трумен Капоте").name); // Завтрак у Тиффани
+console.log(cityLibrary.findBookBy("releaseDate", 1986).name); //"Наука и жизнь"
+
+console.log("Количество книг до выдачи: " + cityLibrary.books.length); //Количество книг до выдачи: 9
+
+// 4. Выдайте любую книгу;
+cityLibrary.giveBookByName("Вокруг света");
+console.log("Количество книг после выдачи: " + cityLibrary.books.length); //Количество книг после выдачи: 8
+// 4. Выдайте любую книгу;
+cityLibrary.giveBookByName("Завтрак у Тиффани");
+console.log("Количество книг до выдачи: " + cityLibrary.books.length); //Количество книг после выдачи: 7
+// 4. Выдайте любую книгу;
+cityLibrary.giveBookByName("Письма незнакомке");
+console.log("Количество книг после выдачи: " + cityLibrary.books.length); //Количество книг после выдачи: 6
+
+// 5. Испортите выданную книгу;
+const spoiledBreakfast = new NovelBook("Трумен Капоте", "Завтрак у Тиффани", 1958, 250);
+console.log(spoiledBreakfast.name); // Завтрак у Тиффани
+spoiledBreakfast.state = 30;
+console.log(spoiledBreakfast.state); //30
+
+// 6. Почините выданную книгу;
+const breakfast = new NovelBook("Трумен Капоте", "Завтрак у Тиффани", 1958, 250);
+console.log(breakfast.name); // "Завтрак у Тиффани"
+breakfast.state = 30;
+console.log(breakfast.state); //30
+breakfast.fix();
+console.log(breakfast.state); //45 
+
+//  Попыталась найти выданную книгу
+console.log(cityLibrary.findBookBy("author", "Трумен Капоте")); // null  нет книги
+
+
+// 7. Обратно вернула в библиотеку починенную книгу
+cityLibrary.addBook(new NovelBook("Трумен Капоте", "Завтрак у Тиффани", 1958, 250)); 
+
+// Попыталась найти вернувшуюся с починки  книгу
+console.log(cityLibrary.findBookBy("author", "Трумен Капоте")); // Есть книга!
+
+
 // Задача 3
 
 class StudentLog {
@@ -172,19 +255,43 @@ class StudentLog {
 - Оценка ставится числом в пределах от 1 до 5.
 - При неверной оценке дополнительно выдаётся сообщение с ошибкой, оценка в журнал не заносится. 
 - Текущее количество оценок все равно требуется вернуть.
+    
+function getAverageMark(marks) {
+  arrMarks = marks;
+  let summMarks = 0;
+  averageRating = 0;
+
+  if (arrMarks.length === 0) {
+    return averageRating;
+  }
+      for (let i = 0; i < arrMarks.length; i ++) {
+        summMarks = summMarks + arrMarks[i];
+     }
+        averageRating = summMarks / arrMarks.length;
+        return averageRating;
+}
 
 */
   addGrade (grade, subject) {
-    //let arrGrade = [];
-    //let arrSubject =[];
-    //for (let i = 0; i < this.arrGrade.length; i ++) {
+    let subjects = {
+        subject: subject,
+        grade: grade
+    };
+    let arrGrade = [];
 
-      //  arrGrade.push.grade[i];
-        //return this.grade;
-      //} else {
-      //console.log("Вы пытались поставить оценку " + this.grade + "! по предмету " + this.subject + " Допускаются только числа от 1 до 5.");
-        // }
-    //}    
+    if ((subjects.grade >= 1) && (subjects.grade <= 5)) {
+      arrGrade.push(subjects.grade);
+
+      for (let i = 0; i < arrGrade.length; i ++) {  
+
+          return arrGrade.length;
+
+      }
+    } else {
+          console.log("Вы пытались поставить оценку " + subjects.grade + " по предмету " + subjects.subject + ". Допускаются только числа от 1 до 5.");
+          
+      }
+      return arrGrade.length;
   }
 
   getAverageBySubject(subject) {
