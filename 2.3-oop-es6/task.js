@@ -1,5 +1,4 @@
 // Задача 1
-
 class PrintEditionItem {
   constructor (name, releaseDate, pagesCount) {
     this.name = name;
@@ -8,7 +7,6 @@ class PrintEditionItem {
     this.state = 100;
     this.type = null;
   }
-
   // метод увеличивает state в 1.5 раза
   fix() {
     return this.state = this.state * 1.5;
@@ -80,13 +78,11 @@ class DetectiveBook extends Book {
   console.log(picknick.state); // 15  
 
   // Задача 2
-
 class Library  {
   constructor(name, books) { 
   this.name = name;  // Название библиотеки
   this.books = []; // это массив - хранилище книг
   }
-
 /*
 Реализуйте метод addBook(book), который будет в качестве аргумента принимать объект (книгу или журнал).
 Метод должен добавлять книгу в хранилище books, только если состояние state книги больше 30.
@@ -118,13 +114,14 @@ class Library  {
   giveBookByName(bookName) {
     for (let n = 0; n < this.books.length; n ++) {
       if (this.books[n].name === bookName) {
-        return this.books.splice(n, 1)[n];
-        
+        return this.books.splice(n, 1)[0]; 
+                                      // здесь n = 0
+        // Результатом работы метода splice является массив вырезанных элементов. Если вырезан один элемент, 
+       //то массив будет длиной в один элемент, а нужный нам будет находиться под индексом 0.
       }
     }
         return null;
   }
-
 }
 
 const library = new Library("Библиотека имени Ленина");
@@ -141,8 +138,6 @@ console.log("Количество книг до выдачи: " + library.books.
 
 library.giveBookByName("Машина времени");
 console.log("Количество книг после выдачи: " + library.books.length); //Количество книг после выдачи: 3
-
-
 /*
 5.   Протестируйте корректность работы классов и методов, разыграв тестовый сценарий:
 1. Создайте библиотеку;
@@ -154,14 +149,11 @@ console.log("Количество книг после выдачи: " + library.
 7. Попытайтесь добавить починенную книгу обратно в библиотеку.
 */
 
-
 const kristi = new PrintEditionItem("Агата Кристи", "Загадка Эндхауза", 1932, 235);
-  console.log(kristi.name); // Агата Кристи
-  console.log(kristi.state); // 100
-  kristi.fix(); 
-  console.log(kristi.state); // 100
-
-  
+console.log(kristi.name); // Агата Кристи
+console.log(kristi.state); // 100
+kristi.fix(); 
+console.log(kristi.state); // 100
 
 // 1. Создайте библиотеку;
 const cityLibrary = new Library("Городская Библиотека");
@@ -216,111 +208,128 @@ console.log(breakfast.state); //45
 
 //  Попыталась найти выданную книгу
 console.log(cityLibrary.findBookBy("author", "Трумен Капоте")); // null  нет книги
-
-
 // 7. Обратно вернула в библиотеку починенную книгу
 cityLibrary.addBook(new NovelBook("Трумен Капоте", "Завтрак у Тиффани", 1958, 250)); 
-
 // Попыталась найти вернувшуюся с починки  книгу
 console.log(cityLibrary.findBookBy("author", "Трумен Капоте")); // Есть книга!
 
-
 // Задача 3
-
 class StudentLog {
   constructor(name) {
   this.name = name;
+  this.grades = {};
   }
-  
-  getName(name) {
+
+   getName(name) {
     return this.name;
-  }
-/*
- Метод возвращает количество поставленных оценок по данному предмету.
-Оценка ставится числом в пределах от 1 до 5.
-При неверной оценке дополнительно выдаётся сообщение с ошибкой, оценка в журнал не заносится. 
-Текущее количество оценок все равно требуется вернуть.
+   }
 
-Напишите пустую функцию.
-Определитесь, как хранятся оценки внутри объекта (самый простой вариант - массив). 
-Представьте, что предмет один и аргумент пока только оценка (без предмета) (edited) 
-напишите в пустую функцию добавление оценки в "туда, где остальные"
-добавьте проверку оценки
-добавьте подсчет количества жлементов в массиве
-добавьте деление по предметам
-
-Создайте метод addGrade(grade, subject), который будет вносить оценку по соответствующему предмету. 
-При этом grade — оценка, subject — предмет. Условия работы метода:
-- Метод возвращает количество поставленных оценок по данному предмету.
-- Оценка ставится числом в пределах от 1 до 5.
-- При неверной оценке дополнительно выдаётся сообщение с ошибкой, оценка в журнал не заносится. 
-- Текущее количество оценок все равно требуется вернуть.
-    
-function getAverageMark(marks) {
-  arrMarks = marks;
-  let summMarks = 0;
-  averageRating = 0;
-
-  if (arrMarks.length === 0) {
-    return averageRating;
-  }
-      for (let i = 0; i < arrMarks.length; i ++) {
-        summMarks = summMarks + arrMarks[i];
-     }
-        averageRating = summMarks / arrMarks.length;
-        return averageRating;
-}
-
-*/
-  addGrade (grade, subject) {
-    let subjects = {
-        subject: subject,
-        grade: grade
-    };
-    let arrGrade = [];
-
-    if ((subjects.grade >= 1) && (subjects.grade <= 5)) {
-      arrGrade.push(subjects.grade);
-
-      for (let i = 0; i < arrGrade.length; i ++) {  
-
-          return arrGrade.length;
-
-      }
-    } else {
-          console.log("Вы пытались поставить оценку " + subjects.grade + " по предмету " + subjects.subject + ". Допускаются только числа от 1 до 5.");
+    addGrade(grade, subject) {
+      let arrGrades = [];
+      console.log(this);
+      const arrSubject = Object.keys(this.grades); // возвращаем массив ключей(предметов)
+      
+      if (grade >= 1 && grade <= 5) {
+      // Проверяем есть ли в объекте this.grades оценка по предмету 
+        if (arrSubject.indexOf(subject) === - 1) {  // если нет предмета с оценкой 
+          // пишем в объект this.grades свойство(предмет) и значение(массив оценок)
+          this.grades[subject] = this.pushGrade(arrGrades, grade); // пытаюсь добавить сразу массив из оценок
+           //this.grades[subject] = grade; // если бы так написала, то только бы оценка попала, а мне надо массив
+           return this.grades[subject].length;
+          } else {  // если уже есть оценка, то только пуш саму оценку в предмет
+            this.grades[subject].push(grade);
+            
+            return this.grades[subject].length;
+          }
+      } else {
+          console.log(`Вы пытались поставить оценку "${grade}" по предмету "${subject}". Допускаются только числа от 1 до 5.`);
           
-      }
-      return arrGrade.length;
-  }
+          return this.grades[subject].length;  
+        }
 
-  getAverageBySubject(subject) {
-
-  }
-
-  getTotalAverage() {
-
-  }
+    } 
+    // этот метод сделала для того, чтобы при первом попадании предмета с оценкой в журнал
+    // сразу для оценок создался массив, куда будем собирать все оценки по предмету
+    pushGrade(numberPush, number) {
+      if (numberPush.length === 0) {
+          numberPush.push(number);
+          return numberPush;
+        }
+    }
+    // этот метод сделала для подсчета средней оценки по предмету
+    getAverageMark(marks) {
+      let arrMarks =[];
+      arrMarks = marks;
+      let summMarks = 0;
+      let averages = 0;
+      
+        if (arrMarks.length === 0) {
+          return averages;
+        }
+          for (let i = 0; i < arrMarks.length; i ++) {
+            summMarks = summMarks + arrMarks[i];
+          }
+            averages = summMarks / arrMarks.length;
+            return (+ averages.toFixed(1));
+    }
+    // Создайте метод getAverageBySubject(subject), получающий среднюю оценку по названию предмета. 
+    // При отсутствии предмета нужно выдать 0.
+    getAverageBySubject(subject) {
+      let averageRating = 0;
+      let summMarks = 0;
+      
+        if (this.grades[subject].length === 0) {
+          return averageRating;
+        }
+          for (let i = 0; i < this.grades[subject].length ; i ++) {
+            summMarks = summMarks + this.grades[subject][i];
+          }
+            averageRating = summMarks / this.grades[subject].length
+            return (+ averageRating.toFixed(1));
+    }
+ 
+    // Создайте метод getTotalAverage(), получающий среднюю оценку по всем предметам. 
+    // Средняя оценка рассчитывается как сумма всех оценок на их количество. При отсутствии оценок нужно выдать 0.
+    getTotalAverage() {
+      let average = 0;
+      let averageRatingLesson = {};
+       
+        if (this.grades === {}) {
+          return average;
+        }
+          for (let prop in this.grades) {
+            // С помощью цикла перебираем поля this.grades и записываем результаты в новый объект averageRatingLesson
+            // Благодаря циклу получаемя массив со средними оценками по каждому предмету 
+            averageRatingLesson[prop] = this.getAverageMark(this.grades[prop]);
+            //console.log(averageRatingLesson);
+          }  
+            // с помощью этого метода возвращаем массив значений со средними оценками,
+            // чтобы посчитать среднюю оценку по всем предметам используем метод this.getAverageMark
+            average = this.getAverageMark(Object.values(averageRatingLesson));
+            return (+ average.toFixed(1));           
+    }
 
 }
+
 const log = new StudentLog('Олег Никифоров');
 console.log(log.getName()) // Олег Никифоров
-
-//const log = new StudentLog('Олег Никифоров');
-
-console.log(log.addGrade(3, 'algebra'));
-// 1
-
+console.log(log.addGrade(3, 'algebra')); // 1
+console.log(log.addGrade(2, 'math')); // 1
 console.log(log.addGrade('отлично!', 'math'));
 // Вы пытались поставить оценку "отлично!" по предмету "math". Допускаются только числа от 1 до 5.
 // 0
-
-console.log(log.addGrade(4, 'algebra'));
-// 2
-
-console.log(log.addGrade(5, 'geometry'));
-// 1
-
+console.log(log.addGrade(4, 'algebra')); // 2
+console.log(log.addGrade(5, 'geometry')); // 1
 console.log(log.addGrade(25, 'geometry'));
 // Вы пытались поставить оценку "25" по предмету "geometry". Допускаются только числа от 1 до 5.
 // 1
+log.addGrade(2, 'algebra');
+log.addGrade(4, 'algebra');
+log.addGrade(5, 'geometry');
+log.addGrade(4, 'geometry');
+      
+console.log(log.getAverageBySubject('geometry')); // 4.5
+console.log(log.getAverageBySubject('algebra')); // 3
+console.log(log.getAverageBySubject('math')); // 0
+
+console.log(log.getTotalAverage()); // 3,75
