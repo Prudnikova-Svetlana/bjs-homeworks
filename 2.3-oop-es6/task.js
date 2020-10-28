@@ -228,26 +228,31 @@ class StudentLog {
       let arrGrades = [];
       console.log(this);
       const arrSubject = Object.keys(this.grades); // возвращаем массив ключей(предметов)
-      
-      if (grade >= 1 && grade <= 5) {
+
+      // Если оценка правильная 
+       if (grade >= 1 && grade <= 5) {
       // Проверяем есть ли в объекте this.grades оценка по предмету 
         if (arrSubject.indexOf(subject) === - 1) {  // если нет предмета с оценкой 
           // пишем в объект this.grades свойство(предмет) и значение(массив оценок)
           this.grades[subject] = this.pushGrade(arrGrades, grade); // пытаюсь добавить сразу массив из оценок
            //this.grades[subject] = grade; // если бы так написала, то только бы оценка попала, а мне надо массив
            return this.grades[subject].length;
-          } else {  // если уже есть оценка, то только пуш саму оценку в предмет
-            this.grades[subject].push(grade);
-            
-            return this.grades[subject].length;
-          }
-      } else {
-          console.log(`Вы пытались поставить оценку "${grade}" по предмету "${subject}". Допускаются только числа от 1 до 5.`);
-          
-          return this.grades[subject].length;  
-        }
+          } else {  // если уже есть предмет и оценка, то только пуш саму оценку в массив оценок в предмет
+              this.grades[subject].push(grade);
+              return this.grades[subject].length;
+            }
+        } else { // иначе - оценка неправильная вывести в консоль предупреждение  
+           if (arrSubject.indexOf(subject) === - 1) { // и нет предмета
+             return 0;  
+           } // Иначе вернуть длину массива, если оценка неправильная, но уже есть оценки в этом предмете
+           console.log(`Вы пытались поставить оценку "${grade}" по предмету "${subject}". Допускаются только числа от 1 до 5.`);
+               return this.grades[subject].length;
+          } 
+    }     
+      
+       
 
-    } 
+    
     // этот метод сделала для того, чтобы при первом попадании предмета с оценкой в журнал
     // сразу для оценок создался массив, куда будем собирать все оценки по предмету
     pushGrade(numberPush, number) {
@@ -255,6 +260,7 @@ class StudentLog {
           numberPush.push(number);
           return numberPush;
         }
+        
     }
     // этот метод сделала для подсчета средней оценки по предмету
     getAverageMark(marks) {
@@ -277,8 +283,7 @@ class StudentLog {
     getAverageBySubject(subject) {
       let averageRating = 0;
       let summMarks = 0;
-      
-        if (this.grades[subject].length === 0) {
+      if (this.grades[subject] === undefined) {
           return averageRating;
         }
           for (let i = 0; i < this.grades[subject].length ; i ++) {
@@ -314,7 +319,7 @@ class StudentLog {
 const log = new StudentLog('Олег Никифоров');
 console.log(log.getName()) // Олег Никифоров
 console.log(log.addGrade(3, 'algebra')); // 1
-console.log(log.addGrade(2, 'math')); // 1
+//console.log(log.addGrade(2, 'math')); // 1
 console.log(log.addGrade('отлично!', 'math'));
 // Вы пытались поставить оценку "отлично!" по предмету "math". Допускаются только числа от 1 до 5.
 // 0
@@ -325,11 +330,13 @@ console.log(log.addGrade(25, 'geometry'));
 // 1
 log.addGrade(2, 'algebra');
 log.addGrade(4, 'algebra');
+console.log(log.addGrade(4, 'algebra')); // 5
 log.addGrade(5, 'geometry');
 log.addGrade(4, 'geometry');
-      
-console.log(log.getAverageBySubject('geometry')); // 4.5
+console.log(log.addGrade(4, 'geometry')); // 4
+
 console.log(log.getAverageBySubject('algebra')); // 3
+console.log(log.getAverageBySubject('geometry')); // 4.5
 console.log(log.getAverageBySubject('math')); // 0
 
 console.log(log.getTotalAverage()); // 3,75
