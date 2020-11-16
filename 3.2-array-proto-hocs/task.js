@@ -88,6 +88,7 @@ function memorize4(fn, limit) {
       // Необходимо в памяти найти такой объект у которого в свойстве args будет такое же значение, 
       // как и массив полученных аргументов. Для сравнения массивов используйте compareArrays.
       if (findObject) {
+        console.log(findObject);
         return `Результат = ${findObject.result} берется из памяти`; // Если история о вызове функции fn найдена, 
       }                           //то функция должна вернуть свойство result найденного объекта.
        // Вычислить результат fn с переданными аргументами.
@@ -95,22 +96,27 @@ function memorize4(fn, limit) {
        //При количестве элементов memory более limit удалить лишнее.
        //Вернуть результат fn с переданными аргументами.
         const result = fn(...args);
-        memory.push({args, result});  
-        if (memory.length > limit) {
-          memory.splice(limit);
+        if (memory.length > limit - 1) {
+          memory.shift();
         }
+        memory.push({args, result});  
+        console.log(memory);
         return `Функция вызвана не из памяти: результат = ${result}`;
     }
 } 
 const resultFunction = memorize4(((a, b) => a + b), 6); // 6 - это лимит элементов в массиве memory
-resultFunction(3, 4); // <= должно вывести: 7 
-resultFunction(5, 6); // <= ничего не найдёт в памяти.
+console.log(resultFunction(3, 4)); 
+console.log(resultFunction(5, 6)); 
 console.log(resultFunction(8, 6));
 console.log(resultFunction(5, 6));
-resultFunction(5, 6);
+console.log(resultFunction(5, 6));
 console.log(resultFunction(7, 13));
 console.log(resultFunction(5, 15));
 console.log(resultFunction(8, 6));
+console.log(resultFunction(3, 9));
+console.log(resultFunction(1, 2));
+console.log(resultFunction(8, 6));
+console.log(resultFunction(1, 7));
 
 /*
 Критерии выполнения
